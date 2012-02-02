@@ -14,13 +14,8 @@ Installation Instructions (Linux)
 
 1. Please check the following requirements are installed for your python version
 
-<<<<<<< HEAD
   a) Tkinter
   b) numpy
-=======
-  Tkinter
-  numpy
->>>>>>> ac41b21041947fd608dcda25137788e6fe28611b
 	
 2. Download gyration tensor plugin from the git repo 
 	git clone git://github.com/VenkyKrishnamani/gyration_tensor.git
