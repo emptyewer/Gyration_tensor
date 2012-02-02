@@ -59,10 +59,12 @@ def open_pdb(self):
                 print "Opening PDB file...", self.pdbFile.name
                 get_PDBChains(self)
                 for ch in self.chains:
-                    print "Center of Geometry"
-                    get_COG(self,ch)
-                    draw_COG(self,ch)
-                    calculate_tensor(self, ch)
+                        print "\nProcessing chain ", ch
+                        print "=============================\n"
+                        print "Center of Geometry of chain ", ch
+                        get_COG(self,ch)
+                        draw_COG(self,ch)
+                        calculate_tensor(self, ch)
                 cmd.zoom()
         else:
                 quitProgram(self,"No PDB file!")
@@ -78,8 +80,6 @@ def draw_COG(self, ch):
 
 def get_PDBChains(self):
         self.chains = cmd.get_chains('PDB')
-        for ch in self.chains:
-                print "PDB has chain ", ch
         
 def calculate_tensor(self, chain):
         selection = 'chain ' + chain
@@ -110,7 +110,7 @@ def calculate_tensor(self, chain):
         mcogx = mcogx/nAtom
         mcogy = mcogy/nAtom
         mcogz = mcogz/nAtom
-        print "NEW COG : ", mcogx, mcogy, mcogz
+        print "Translating COG of chain ", chain, "\n", mcogx, mcogy, mcogz
         
         xx = xx/nAtom
         xy = xy/nAtom
@@ -123,7 +123,7 @@ def calculate_tensor(self, chain):
         self.evals, self.evecs = numpy.linalg.eig(gyration_tensor)
         self.magnitude = numpy.sqrt(self.evals)
         
-        print "\nMagnitude of Tensors :\n", self.magnitude, "\nEigen Vectors :\n", self.evecs
+        print "\nMagnitude of Tensors :\n", self.magnitude, "\nDirectional Vectors :\n", self.evecs
         
         x1,y1,z1 = self.magnitude[0] * self.evecs[0,0] + self.cogx, self.magnitude[0] * self.evecs[1,0] + self.cogy, self.magnitude[0] * self.evecs[2,0] + self.cogz
         x2,y2,z2 = self.magnitude[1] * self.evecs[0,1] + self.cogx, self.magnitude[1] * self.evecs[1,1] + self.cogy, self.magnitude[1] * self.evecs[2,1] + self.cogz
